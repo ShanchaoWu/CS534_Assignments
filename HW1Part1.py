@@ -71,6 +71,7 @@ class DrawBoard:
     def drawchessboard(self):
         if self.is_plot:
             screen = Screen()
+            # screen.screensize(canvwidth=800,canvheight=600)
             screen.title('Heavy Queen')
             # screen.bgcolor('blue')
             screen.tracer(False)

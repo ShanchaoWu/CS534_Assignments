@@ -1,4 +1,6 @@
 import numpy as np
+import random
+from turtle import Screen, Turtle
 
 class HeavyQueen9N8:
     def __init__(self, chess_dim=8):

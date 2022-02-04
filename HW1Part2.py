@@ -55,7 +55,9 @@ class DrawBoard:
                 self.__square(color)
                 self.marker.goto(self.greg.xcor() - self.size/2, self.greg.ycor() + self.size/2 - self.FONT_SIZE/2)
                 self.marker.pencolor(text)
-                self.marker.write(num_value, align='center', font=self.FONT)
+                if num_value != 0:
+                    text_value = 'Q-' + str(num_value)
+                    self.marker.write(text_value, align='center', font=self.FONT)
 
             self.greg.goto(-self.size * side/2, self.size*side/2 - self.size*(i+1))
 

@@ -21,7 +21,6 @@ class HeavyQueen:
     def __loadboard(self):
         load_mtx = loadtxt(self.file_name, delimiter=',').astype(int)
         self.n = len(load_mtx)
-        print(self.n)
         self.chess_board = load_mtx
 
     def check_attack(self, row, col):
@@ -45,8 +44,11 @@ class HeavyQueen:
         for i,j in zip(range(row+1,self.n,1),range(col+1,self.n,1)):
             if self.chess_board[i,j]!=0:
                 count = count + 1
-
         return count
+
+    def show_queenpos(self):
+        index_list = np.transpose(np.nonzero(self.chess_board))
+        return index_list
 
 
 
@@ -126,12 +128,12 @@ class DrawBoard:
             print('No plot! Set is_plot to True')
 
 if __name__ == "__main__":
-    # start_time = time.time()
-    heave_queen = HeavyQueen(chess_dim=20)
-    heave_queen.init_borad()
-    count = heave_queen.check_attack(2, 1)
-    # print("Runtime:  %s seconds" % (time.time() - start_time))
-    print(count)
+    start_time = time.time()
+    heavy_queen = HeavyQueen(chess_dim=4)
+    heavy_queen.init_borad()
+    print("Runtime:  %s seconds" % (time.time() - start_time))
     ### draw chess board, please put it at the end of main
-    draw_board = DrawBoard(value_list=heave_queen.chess_board, is_plot=True,size=40)
+    a = heavy_queen.show_queenpos()
+    print(a)
+    draw_board = DrawBoard(value_list=heavy_queen.chess_board, is_plot=True,size=40)
     draw_board.drawchessboard()

@@ -1,15 +1,26 @@
 import numpy as np
 import random
 from turtle import Screen, Turtle
+from numpy import savetxt, loadtxt
 
 class HeavyQueen:
-    def __init__(self, chess_dim=8):
+    def __init__(self, chess_dim=8, file_name = None):
         self.n = chess_dim
+        self.file_name = file_name
         self.chess_board = np.zeros((self.n, self.n)).astype(int)
 
     def init_borad(self):
-        for i in range(self.n):
-            self.chess_board[random.randint(0, self.n-1), i] = random.randint(1, 9)
+        if self.file_name == None:
+            for i in range(self.n):
+                self.chess_board[random.randint(0, self.n-1), i] = random.randint(1, 9)
+            savetxt('cheeseboard_init.csv', self.chess_board, delimiter=',')
+        else:
+            self.__loadboard()
+
+    def __loadboard(self):
+        load_mtx = loadtxt(self.file_name, delimiter=',').astype(int)
+        self.n = len(load_mtx)
+        self.chess_board = load_mtx
 
     def test(self):
         print(self.n)
@@ -17,6 +28,9 @@ class HeavyQueen:
 
 
 class DrawBoard:
+########################################################################################
+# class for drawing board, you can play with it. Good for visualization.
+########################################################################################
     def __init__(self, value_list = np.zeros((8, 8)).astype(int), is_plot = False, size = 100):
         self.value_list = value_list
         self.is_plot = is_plot
@@ -63,7 +77,7 @@ class DrawBoard:
                 self.marker.pencolor(text)
 
                 if num_value != 0:
-                    text_value = 'Q-' + str(num_value)
+                    text_value = 'Q' + str(num_value)
                     self.marker.write(text_value, align='center', font=self.FONT)
 
             self.greg.goto(-self.size * side/2, self.size*side/2 - self.size*(i+1))
@@ -71,7 +85,8 @@ class DrawBoard:
     def drawchessboard(self):
         if self.is_plot:
             screen = Screen()
-            # screen.screensize(canvwidth=800,canvheight=600)
+            # print(screen.screensize())
+            screen.screensize(canvwidth=1000, canvheight=1000)
             screen.title('Heavy Queen')
             # screen.bgcolor('blue')
             screen.tracer(False)
@@ -81,7 +96,7 @@ class DrawBoard:
             print('No plot! Set is_plot to True')
 
 if __name__ == "__main__":
-    heave_queen = HeavyQueen(chess_dim=8)
+    heave_queen = HeavyQueen(file_name='test.csv')
     heave_queen.init_borad()
-    draw_board = DrawBoard(value_list=heave_queen.chess_board, is_plot=True)
+    draw_board = DrawBoard(value_list=heave_queen.chess_board, is_plot=True,size=100)
     draw_board.drawchessboard()

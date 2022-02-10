@@ -2,6 +2,7 @@ import numpy as np
 import random
 from turtle import Screen, Turtle
 from numpy import savetxt, loadtxt
+import time
 
 class HeavyQueen:
     def __init__(self, chess_dim=8, file_name = None):
@@ -20,7 +21,35 @@ class HeavyQueen:
     def __loadboard(self):
         load_mtx = loadtxt(self.file_name, delimiter=',').astype(int)
         self.n = len(load_mtx)
+        print(self.n)
         self.chess_board = load_mtx
+
+    def check_attack(self, row, col):
+        count = 0
+        for i in range(self.n):
+            if self.chess_board[row,i]!=0:
+                count = count + 1*(not(i==col))
+
+        for i,j in zip(range(row-1,-1,-1),range(col-1,-1,-1)):
+            if self.chess_board[i,j]!=0:
+                count = count + 1
+
+        for i,j in zip(range(row+1,self.n,1),range(col-1,-1,-1)):
+            if self.chess_board[i,j]!=0:
+                count = count + 1
+
+        for i,j in zip(range(row-1,-1,-1),range(col+1,self.n,1)):
+            if self.chess_board[i,j]!=0:
+                count = count + 1
+
+        for i,j in zip(range(row+1,self.n,1),range(col+1,self.n,1)):
+            if self.chess_board[i,j]!=0:
+                count = count + 1
+
+        return count
+
+
+
 
     def test(self):
         print(self.n)
@@ -87,6 +116,7 @@ class DrawBoard:
             screen = Screen()
             # print(screen.screensize())
             screen.screensize(canvwidth=1000, canvheight=1000)
+            screen.setup(1000,1000)
             screen.title('Heavy Queen')
             # screen.bgcolor('blue')
             screen.tracer(False)
@@ -96,7 +126,12 @@ class DrawBoard:
             print('No plot! Set is_plot to True')
 
 if __name__ == "__main__":
-    heave_queen = HeavyQueen(file_name='test.csv')
+    # start_time = time.time()
+    heave_queen = HeavyQueen(chess_dim=20)
     heave_queen.init_borad()
-    draw_board = DrawBoard(value_list=heave_queen.chess_board, is_plot=True,size=100)
+    count = heave_queen.check_attack(2, 1)
+    # print("Runtime:  %s seconds" % (time.time() - start_time))
+    print(count)
+    ### draw chess board, please put it at the end of main
+    draw_board = DrawBoard(value_list=heave_queen.chess_board, is_plot=True,size=40)
     draw_board.drawchessboard()

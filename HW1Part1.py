@@ -13,7 +13,7 @@ class HeavyQueen:
         if self.file_name == None:
             for i in range(self.n):
                 self.chess_board[random.randint(0, self.n-1), i] = random.randint(1, 9)
-            savetxt('cheeseboard_init.csv', self.chess_board, delimiter=',')
+            savetxt('heavyqueen_init.csv', self.chess_board, delimiter=',')
         else:
             self.__loadboard()
 

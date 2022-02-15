@@ -46,9 +46,18 @@ class HeavyQueen:
                 count = count + 1
         return count
 
-    def show_queenpos(self):
-        index_list = np.transpose(np.nonzero(self.chess_board))
-        return index_list
+    def sort_queen(self):
+        np_index_list = np.transpose(np.nonzero(self.chess_board))
+        weight_list = []
+        pos_list = []
+        for i_index in range(np_index_list.shape[0]):
+            weight_list.append(self.chess_board[np_index_list[i_index,0],np_index_list[i_index,1]])
+            pos_list.append(np_index_list[i_index,:])
+
+        temp = sorted(zip(weight_list, pos_list), key=lambda x:x[0])
+        queen_weight, queen_pos = map(list, zip(*temp))
+
+        return queen_weight, queen_pos
 
 
 
@@ -129,11 +138,14 @@ class DrawBoard:
 
 if __name__ == "__main__":
     start_time = time.time()
-    heavy_queen = HeavyQueen(chess_dim=4)
+    heavy_queen = HeavyQueen(chess_dim=8)
     heavy_queen.init_borad()
     print("Runtime:  %s seconds" % (time.time() - start_time))
+
+    mtx = heavy_queen.chess_board
+
+    a, b = heavy_queen.sort_queen()
+
     ### draw chess board, please put it at the end of main
-    a = heavy_queen.show_queenpos()
-    print(a)
     draw_board = DrawBoard(value_list=heavy_queen.chess_board, is_plot=True,size=40)
     draw_board.drawchessboard()

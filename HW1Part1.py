@@ -116,8 +116,6 @@ class HeavyQueen:
 
 
 
-
-
     def run(self):
         self.greedy_search()
 
@@ -181,8 +179,8 @@ class DrawBoard:
         if self.is_plot:
             screen = Screen()
             # print(screen.screensize())
+            screen.setup(1000, 1000)
             screen.screensize(canvwidth=1000, canvheight=1000)
-            screen.setup(1000,1000)
             screen.title('Heavy Queen')
             # screen.bgcolor('blue')
             screen.tracer(False)
@@ -194,7 +192,11 @@ class DrawBoard:
 if __name__ == "__main__":
     start_time = time.time()
     # heavy_queen = HeavyQueen(chess_dim=8, file_name='heavyqueen_init.csv')
-    heavy_queen = HeavyQueen(chess_dim=40)
+    # print('Enter the dimension of the chess board: \n')
+    # N = input()
+    # N = int(N)
+    N = 8
+    heavy_queen = HeavyQueen(chess_dim=N)
     heavy_queen.init_borad()
     heavy_queen.run()
     print("Runtime:  %s seconds" % (time.time() - start_time))
@@ -202,5 +204,6 @@ if __name__ == "__main__":
     print(heavy_queen.cost)
 
     ### draw chess board, please put it at the end of main
-    # draw_board = DrawBoard(value_list=heavy_queen.chess_board, is_plot=True,size=25)
-    # draw_board.drawchessboard()
+    plot_cub_size = int(800/N)
+    draw_board = DrawBoard(value_list=heavy_queen.chess_board, is_plot=True, size=plot_cub_size)
+    draw_board.drawchessboard()

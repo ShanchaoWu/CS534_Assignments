@@ -1,8 +1,13 @@
 import numpy as np
 import random
+from queue import PriorityQueue
 from turtle import Screen, Turtle
 from numpy import savetxt, loadtxt
 import time
+
+# find size of queue: a.qsize()
+# add to queue: a.put()
+# remove and get from queuee: a.get()
 
 class HeavyQueen:
     def __init__(self, chess_dim=8, file_name = None):

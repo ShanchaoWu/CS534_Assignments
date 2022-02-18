@@ -89,8 +89,8 @@ class HeavyQueen:
             count = count + queen_attack
         return int(count/2)
 
-    def cal_heuristic(self, step):
-        return int(self.lightest_weight^2*step)
+    def cal_heuristic(self, attack_pair, weight):
+        return self.lightest_weight^2*attack_pair*(1-1/weight)
 
     def greedy_search_test(self):
         while(True):

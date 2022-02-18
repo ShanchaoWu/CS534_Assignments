@@ -119,10 +119,13 @@ class HeavyQueen:
                         self.chess_board[row, col] = 0
                 self.cost = self.cost + self.cal_heuristic(abs(row_new - row))
 
+    def A_star(self):
+        pass
+
 
 
     def run(self):
-        self.greedy_search()
+        self.A_star()
 
 
 class DrawBoard:

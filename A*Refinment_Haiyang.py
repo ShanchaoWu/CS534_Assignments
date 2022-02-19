@@ -8,7 +8,8 @@ global pq
 import copy
 pq=PriorityQueue()
 global pq_list
-pq_list=[]
+pq_list=[] # open list
+pq_close_list = [] # close list
 
 class Node:
     def __init__(self):
@@ -196,7 +197,7 @@ def cal_heuristic(state):
     temp=math.floor((count/2))
     if temp==0:
         return 0
-    return (100+math.floor((count/2)))
+    return (math.floor((count/2)))
 
 def cal_g(state1,state2):
     #print("Inside Cal_g")
@@ -269,8 +270,9 @@ def populate(x):
             temp.g_x=cal_g(temp.state,x.state) + x.g_x
             #print (temp.g_x)
             #print (temp.h_x)
-            temp.cost_so_far=10*temp.h_x + temp.g_x
-            #temp.f_x = temp.cost_so_far+temp.h_x
+            #temp.cost_so_far=100*temp.h_x + temp.g_x
+            temp.cost_so_far=temp.h_x
+            #temp.f_x = 
             
             #print (temp)
             #print (temp.cost_so_far)
@@ -313,7 +315,10 @@ while(True):
     next_state=pq_list[next_indice[1]]
     #print("Next STate")
     #print (next_indice[1])
-    print(next_state.state)
+    # print(next_state.state)
+    # print(next_state.h_x)
+    # print(next_state.g_x)
+    # print(next_state.cost_so_far)
     goal = is_goal(next_state.state)
     if(goal==1):
         time_end=time.perf_counter()
@@ -325,4 +330,3 @@ while(True):
         break
     
     start=next_state
-

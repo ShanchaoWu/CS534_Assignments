@@ -297,7 +297,7 @@ def print_soln(state1):
     while(len(list_soln)!=0):
         #print("Printing soln")
         a=list_soln.pop()
-        print(a)
+        # print(a)
 
 
 print("Enter N")

@@ -89,8 +89,9 @@ class HeavyQueen:
             count = count + queen_attack
         return int(count/2)
 
-    def cal_heuristic(self, attack_pair, weight):
-        return self.lightest_weight^2*attack_pair*(1-1/weight)
+    def cal_heuristic(self, attack_pair):#, weight):
+        return self.lightest_weight ^ 2 * attack_pair
+        # return self.lightest_weight^2*attack_pair*(1-1/weight)
 
     def greedy_search_test(self):
         while(True):
@@ -117,7 +118,7 @@ class HeavyQueen:
                             row_new = i_pos
                     if row_new != row:
                         self.chess_board[row, col] = 0
-                self.cost = self.cost + self.cal_heuristic(abs(row_new - row))
+                self.cost = self.cost + self.cal_heuristic(attack_pair) # abs(row_new - row)
 
     def A_star(self):
         pass
@@ -125,7 +126,8 @@ class HeavyQueen:
 
 
     def run(self):
-        self.A_star()
+        self.greedy_search_test()
+        # self.A_star()
 
 
 class DrawBoard:
@@ -203,7 +205,7 @@ if __name__ == "__main__":
     # print('Enter the dimension of the chess board: \n')
     # N = input()
     # N = int(N)
-    N = 8
+    N = 16
     heavy_queen = HeavyQueen(chess_dim=N)
     heavy_queen.init_borad()
     heavy_queen.run()

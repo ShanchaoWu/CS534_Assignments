@@ -1,3 +1,4 @@
+
 import numpy as np
 import time
 from queue import PriorityQueue
@@ -16,6 +17,7 @@ class Node:
         self.h_x=0
         self.cost_so_far=0
         self.parent= None
+        #self.f_x = 0
         pass
 
 
@@ -102,7 +104,8 @@ def random_state(N):
     for x in range(N):
         row=random.randrange(0,N)
         #print(row,x)
-        board[row][x]=3
+        board[row][x]=random.randint(1,9)
+        #board[row][x]=4
     return board
 
 def cal_heuristic(state):
@@ -193,7 +196,7 @@ def cal_heuristic(state):
     temp=math.floor((count/2))
     if temp==0:
         return 0
-    return (math.floor((count/2)))
+    return (100+math.floor((count/2)))
 
 def cal_g(state1,state2):
     #print("Inside Cal_g")
@@ -237,6 +240,10 @@ def populate(x):
     state=np.copy(x.state)
     for col in range(len(state)):
         state=np.copy(x.state)
+        for i in range(len(state)):
+            if state[i][col] != 0:
+                cur_weight = state[i][col]
+                #print(i,col,cur_weight)
         for row in range(len(state)):
             temp=None
             
@@ -248,28 +255,35 @@ def populate(x):
                 state[k][col]=0
             
             #print (state)
-            state[row][col]=3
+            
+            state[row][col] = cur_weight
+            # state[row][col] = 3
             #print("Inside Populate")
-            #print(state)
+            # print(state)
             temp.state=state
             #print ("Costs")
             #print (temp.h_x)
             #print (temp.g_x)
             #print (x.g_x)
             temp.h_x=cal_heuristic(temp.state)
-            temp.g_x=cal_g(temp.state,x.state)
+            temp.g_x=cal_g(temp.state,x.state) + x.g_x
             #print (temp.g_x)
             #print (temp.h_x)
-            temp.cost_so_far=temp.h_x+temp.g_x+x.g_x
+            temp.cost_so_far=10*temp.h_x + temp.g_x
+            #temp.f_x = temp.cost_so_far+temp.h_x
+            
             #print (temp)
             #print (temp.cost_so_far)
             #print("I am printing in populate")
             #print (temp.state)
-            if np.array_equal(x.state,temp.state)==0:
+            #debug = np.array_equal(x.state,temp.state)
+            if np.array_equal(x.state,temp.state)==False:
                 a=copy.deepcopy(temp)
                 pq_list.append(a)
-            #print(len(pq_list)-1)
+                #print(temp.cost_so_far)
+                #print(len(pq_list)-1)
                 
+                #pq.put((temp.cost_so_far,len(pq_list)-1))
                 pq.put((temp.cost_so_far,len(pq_list)-1))
 
 def print_soln(state1):
@@ -298,9 +312,10 @@ while(True):
     #print("Indice",next_indice[1])
     next_state=pq_list[next_indice[1]]
     #print("Next STate")
-    #print (next_indice[0])
-    #print(next_state.state)
-    if(is_goal(next_state.state)==1):
+    #print (next_indice[1])
+    print(next_state.state)
+    goal = is_goal(next_state.state)
+    if(goal==1):
         time_end=time.perf_counter()
         print("Solution reached")
         print_soln(next_state)

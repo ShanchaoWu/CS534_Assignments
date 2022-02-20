@@ -18,6 +18,8 @@ class HeavyQueen:
         self.cost = 0
         self.h = 0
         self.g = 0
+        self.node = 0
+        self.branch = 0
 
     #### Board initialization
     def init_borad(self):
@@ -89,9 +91,8 @@ class HeavyQueen:
             count = count + queen_attack
         return int(count/2)
 
-    def cal_heuristic(self, attack_pair):#, weight):
+    def cal_heuristic(self, attack_pair):
         return self.lightest_weight ^ 2 * attack_pair
-        # return self.lightest_weight^2*attack_pair*(1-1/weight)
 
     def greedy_search_test(self):
         while(True):
@@ -102,7 +103,9 @@ class HeavyQueen:
                 row = queen_pos[i_index][0]
                 col = queen_pos[i_index][1]
                 row_new = row
+                self.node = self.node + 1
                 for i_pos in range(self.n):
+                    self.branch = self.branch + 1
                     if self.check_total(self.chess_board) == 0:
                         print('done')
                         return
@@ -212,6 +215,9 @@ if __name__ == "__main__":
     print("Runtime:  %s seconds" % (time.time() - start_time))
     # mtx = heavy_queen.chess_board
     print(heavy_queen.cost)
+    print(heavy_queen.node)
+    print(heavy_queen.branch)
+    print(heavy_queen.branch/heavy_queen.node)
 
     ### draw chess board, please put it at the end of main
     plot_cub_size = int(800/N)

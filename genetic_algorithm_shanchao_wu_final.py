@@ -300,7 +300,7 @@ def load_txt(path):
     return board_list
 
 if __name__ == "__main__":
-    test_8 = HeavyQueen9N8(load_file = 'board/test_8.txt')
+    test_8 = HeavyQueen9N8(load_file = 'board/test_32.txt')
     board_8 = test_8.init_board()
     print("Original Board")
     print(board_8)

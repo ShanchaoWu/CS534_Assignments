@@ -298,3 +298,17 @@ def load_txt(path):
         model = HeavyQueen9N8(load_file = i)
         board_list.append(model.init_board())
     return board_list
+
+if __name__ == "__main__":
+    test_8 = HeavyQueen9N8(load_file = 'board/test_8.txt')
+    board_8 = test_8.init_board()
+    print("Original Board")
+    print(board_8)
+    test_model = genetic_algo(board_8)
+    print("Initial Cost: {}".format(test_model.attack_cost(test_model.init_row_list)))
+    test_model.processing()
+    result = test_model.min_pop_list[0]
+    board = test_model.get_board(result)
+    print("Result Board")
+    print(board)
+    print("Result Cost: {}".format(test_model.min_cost_list[0]))

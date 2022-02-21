@@ -160,7 +160,7 @@ class hill_climbing:
                     pos = self.queensPositions_final[q]
                     side_way = self.queensPositions_final[:]
                     while True:
-                        move = (random.randint(0, self.dim), pos[1])
+                        move = (random.randint(0, self.dim-1), pos[1])
                         if move != pos and move not in side_way:
                             break
                     side_way[q] = move

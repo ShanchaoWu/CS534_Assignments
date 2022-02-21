@@ -1,10 +1,27 @@
-# // =================================================
-# /*
-# \author Haiyang Yun
-# */
-# // =================================================
+########################################################################################
+# Author: Haiyang Yun
 
-from operator import le
+# Node is basic class for chess board. It contains h_value, g_value, f_value, and metadata
+
+# is_Goal(state): used to check if current chessboard has reached 0 h_value, which means no attacking pairs
+
+# random_state(N): Generate randow N by N chessboard. Every Queen has weighy 1~9
+
+# cal_heruistic(state): Compute current chessboard's h_value.
+
+# cal_g(state1, state2): Compute the movement cost between two states. Cost function  = weight^2 * steps
+
+# cal_f_greedy(h_value,g_value), cal_f_Astar(h_value,g_value): Different approaches to guide the search
+
+# populate(Node): Generate every possible children state given the parent Node. Compute their h, g, and f. 
+# Then append children in pq_list, store f value and pq_list index into PriorityQueue
+
+# main(): Read user input as N, generate start node. Use populate(x) to generate children. Then choose the child with lowest f_value as next node. 
+# Break and return if Is_Goal(stete) return a True. Print parents nodes of the solution
+########################################################################################
+
+
+
 import numpy as np
 import time
 from queue import PriorityQueue

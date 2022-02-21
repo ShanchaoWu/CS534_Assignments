@@ -43,6 +43,52 @@ class HeavyQueen9N8:
         self.dim = len(load_mtx)
         self.chess_board = load_mtx
 
+    def check_attack(self, chess_board, row, col):
+        count = 0
+        for i in range(self.dim):
+            if chess_board[row,i]!=0:
+                count = count + 1*(not(i==col))
+
+        for i in range(self.dim):
+            if chess_board[i,col]!=0:
+                count = count + 1*(not(i==row))
+
+        for i,j in zip(range(row-1,-1,-1),range(col-1,-1,-1)):
+            if chess_board[i,j]!=0:
+                count = count + 1
+
+        for i,j in zip(range(row+1,self.dim,1),range(col-1,-1,-1)):
+            if chess_board[i,j]!=0:
+                count = count + 1
+
+        for i,j in zip(range(row-1,-1,-1),range(col+1,self.dim,1)):
+            if chess_board[i,j]!=0:
+                count = count + 1
+
+        for i,j in zip(range(row+1,self.dim,1),range(col+1,self.dim,1)):
+            if chess_board[i,j]!=0:
+                count = count + 1
+        return count
+
+    def check_total(self, chess_board):
+        queen_weight, queen_pos = self.find_weight(chess_board)
+        count = 0
+        for i_queen in range(len(queen_pos)):
+            row = queen_pos[i_queen][0]
+            col = queen_pos[i_queen][1]
+            queen_attack = self.check_attack(chess_board, row, col)
+            count = count + queen_attack
+        return int(count/2)
+
+    def find_weight(self, board):
+        np_index_list = np.transpose(np.nonzero(board))
+        weight_list = []
+        pos_list = []
+        for i_index in range(np_index_list.shape[0]):
+            weight_list.append(board[np_index_list[i_index, 0], np_index_list[i_index, 1]])
+            pos_list.append(np_index_list[i_index, :])
+        return weight_list, pos_list
+
 
 class genetic_algo:
     def __init__(self, board, population=200, crossover=3, mutate=0.2, time=0, eli_ratio=0.2, cul_ratio=0.2,
@@ -610,11 +656,12 @@ class DrawBoard:
             print('No plot! Set is_plot to True')
 
 if __name__ == "__main__":
-    N = 8 # can pick from 8-32
+    N = 16 # can pick from 8-32
     file_name = f'board/test_{N}.txt'
-
     heavy_queen = HeavyQueen9N8(load_file=file_name)
     chess_board_init = heavy_queen.init_board()
+    # attack_pair = heavy_queen.check_total(chess_board_init)
+    # print(attack_pair)
     print("Original Board")
     print(chess_board_init)
     test_model = genetic_algo(chess_board_init)

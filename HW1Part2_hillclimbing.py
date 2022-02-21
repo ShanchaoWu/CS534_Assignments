@@ -1,3 +1,10 @@
+# // =================================================
+# /*
+# \author Shanchao Wu --  main algorithm
+
+# */
+# // =================================================
+
 import time
 import random
 import numpy as np

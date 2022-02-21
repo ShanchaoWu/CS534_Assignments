@@ -1,6 +1,7 @@
 # // =================================================
 # /*
-# \author Shanchao Wu
+# \author Shanchao Wu -- main algorithm
+# \author Haoying Zhou -- initialization
 # */
 # // =================================================
 

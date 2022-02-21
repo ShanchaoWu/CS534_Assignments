@@ -12,6 +12,12 @@ python3 HWPart1_genetic.py
 
 #### A * Search
 
+Run A*_and_Greedy_Haiyang.py. Type in the N as chessbord dimension.
+
+If using Greedy Search: Change line 277 to : temp.cost_so_far=cal_f_greedy(temp.h_x,temp.g_x)
+
+If using A* Search: Change line 277 to : temp.cost_so_far=cal_f_Astar(temp.h_x,temp.g_x)
+
 # Part 2
 
 #### Hill climbing

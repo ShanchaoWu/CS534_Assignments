@@ -274,8 +274,8 @@ def populate(x):
             #print (temp.h_x)
             #temp.cost_so_far=temp.h_x
             #temp.cost_so_far=temp.h_x+temp.g_x
-            temp.cost_so_far=cal_f_Astar
-            #temp.cost_so_far=cal_f_greedy
+            temp.cost_so_far=cal_f_Astar(temp.h_x,temp.g_x)
+            #temp.cost_so_far=cal_f_greedy(temp.h_x,temp.g_x)
 
             
             #print (temp)

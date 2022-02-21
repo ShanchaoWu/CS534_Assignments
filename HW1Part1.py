@@ -118,7 +118,7 @@ class HeavyQueen:
         weight_list_old, pos_list_old = self.sort_queen(board2)
 
         for i in range(len(weight_list_new)):
-            assert weight_list_old[i] == weight_list_new[i] , 'wrong algorithm'
+            # assert weight_list_old[i] == weight_list_new[i] , 'wrong algorithm'
             weight = weight_list_new[i]
             pos_new = pos_list_new[i]
             pos_old = pos_list_old[i]

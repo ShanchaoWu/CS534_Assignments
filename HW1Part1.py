@@ -112,6 +112,8 @@ class HeavyQueen:
         weight_list_old, pos_list_old = self.find_weight(board)
 
         for i in range(len(weight_list_new)):
+            assert weight_list_old[i] != weight_list_new[i] , 'wrong algorithm'
+
             weight = weight_list_new[i]
             pos_new = pos_list_new[i]
             pos_old = pos_list_old[i]
@@ -150,7 +152,8 @@ class HeavyQueen:
                             row_new = i_pos
                     if row_new != row:
                         self.chess_board[row, col] = 0
-                self.cost = self.cost + self.cal_heuristic(attack_pair) # abs(row_new - row)
+                self.cost = self.cost + self.cal_heuristic(attack_pair)
+                # self.cost = self.cost + self.cal_g(self.chess_board)# abs(row_new - row)
 
     def A_star(self):
         pass

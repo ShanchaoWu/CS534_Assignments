@@ -1,8 +1,26 @@
-# // =================================================
-# /*
-# \author Haiyang Yun
-# */
-# // =================================================
+########################################################################################
+# Author: Haiyang Yun
+
+# Node is basic class for chess board. It contains h_value, g_value, f_value, and metadata
+
+# is_Goal(state): used to check if current chessboard has reached 0 h_value, which means no attacking pairs
+
+# random_state(N): Generate randow N by N chessboard. Every Queen has weighy 1~9
+
+# cal_heruistic(state): Compute current chessboard's h_value.
+
+# cal_g(state1, state2): Compute the movement cost between two states. Cost function  = weight^2 * steps
+
+# cal_f_greedy(h_value,g_value), cal_f_Astar(h_value,g_value): Different approaches to guide the search
+
+# populate(Node): Generate every possible children state given the parent Node. Compute their h, g, and f. 
+# Then append children in pq_list, store f value and pq_list index into PriorityQueue
+
+# main(): Read user input as N, generate start node. Use populate(x) to generate children. Then choose the child with lowest f_value as next node. 
+# Break and return if Is_Goal(stete) return a True. Print parents nodes of the solution
+########################################################################################
+
+
 
 import numpy as np
 import time
@@ -14,7 +32,6 @@ import copy
 pq=PriorityQueue()
 global pq_list
 pq_list=[] # open list
-pq_close_list = [] # close list
 
 class Node:
     def __init__(self):
@@ -36,7 +53,6 @@ def is_goal(state):
     x=np.where(state != 0)
     N=len(state)
     for i in range (len(x[0])):
-        #print (x[0][i],x[1][i])
         row=x[0][i]
         col=x[1][i]
         
@@ -105,8 +121,6 @@ def is_goal(state):
 def random_state(N):
     board = np.zeros((N,N)).astype(int)
     print("Creating Random First State for N =",N)
-    # for i in range(N):
-    #     board[random.randint(0,N-1),i] = random.randint(1,9)
     for x in range(N):
         row=random.randrange(0,N)
         #print(row,x)
@@ -120,23 +134,17 @@ def cal_heuristic(state):
     attack=[]
     count=0
     for i in range (len(x[0])):
-        #print (x[0][i],x[1][i])
         row=x[0][i]
         col=x[1][i]
         
-        #same row
         
         for i in range(N):
             if(state[row][i]!=0 and i!=col):
-                
                 count=count+1
-                #print("Same Row",count)
                 attack.append([[row,col],[row,i]])
         
-        #same column
         for i in range(N):
             if(state[i][col]!=0 and i!=row):
-               # print("Same Column",count)
                 count=count+1
                 attack.append([[row,col],[row,i]])
         
@@ -205,9 +213,6 @@ def cal_heuristic(state):
     return (math.floor((count/2)))
 
 def cal_g(state1,state2):
-    #print("Inside Cal_g")
-    #print (state1)
-    #print (state2)
     cost = 0
     if (np.array_equal(state1,state2)==0):
         changed_state=np.absolute(state1-state2)
@@ -216,8 +221,6 @@ def cal_g(state1,state2):
         ones2=np.where(changed_state!=0)[1] # col number
         # according to col number, can track the weight of queens
         cols = np.unique(ones2)
-
-        
         for i in cols:
             pos = np.where(ones2 == i)[0]
             row_diff = abs(ones[pos[1]] - ones[pos[0]])
@@ -231,12 +234,15 @@ def cal_g(state1,state2):
             # print(weight)
             cost = cost + np.square(weight)*row_diff
          
-                        
-        #print (diff)
         return cost
     else:
         return 0
 
+def cal_f_greedy(h_value,g_value):
+    return h_value
+
+def cal_f_Astar(h_value,g_value):
+    return h_value + g_value
 
 def populate(x):
     global pq
@@ -244,6 +250,7 @@ def populate(x):
     a=None
     temp=None
     state=np.copy(x.state)
+    l_weight = np.amin(state)
     for col in range(len(state)):
         state=np.copy(x.state)
         for i in range(len(state)):
@@ -259,25 +266,17 @@ def populate(x):
             #state[col][:]=0
             for k in range(len(state)):
                 state[k][col]=0
-            
-            #print (state)
-            
             state[row][col] = cur_weight
-            # state[row][col] = 3
-            #print("Inside Populate")
-            # print(state)
             temp.state=state
-            #print ("Costs")
-            #print (temp.h_x)
-            #print (temp.g_x)
-            #print (x.g_x)
             temp.h_x=cal_heuristic(temp.state)
-            temp.g_x=cal_g(temp.state,x.state) + x.g_x
+            temp.g_x=cal_g(temp.state,x.state)+ x.g_x
             #print (temp.g_x)
             #print (temp.h_x)
-            #temp.cost_so_far=100*temp.h_x + temp.g_x
-            temp.cost_so_far=temp.h_x
-            #temp.f_x = 
+            #temp.cost_so_far=temp.h_x
+            #temp.cost_so_far=temp.h_x+temp.g_x
+            temp.cost_so_far=cal_f_Astar(temp.h_x,temp.g_x)
+            #temp.cost_so_far=cal_f_greedy(temp.h_x,temp.g_x)
+
             
             #print (temp)
             #print (temp.cost_so_far)
@@ -295,14 +294,15 @@ def populate(x):
 
 def print_soln(state1):
     list_soln=[]
+    n= len(state1.state)
     while(state1.parent!=None):
         list_soln.append(state1.state)
         state1=state1.parent
-    print ("Branching Factor",float(len(pq_list)/len(list_soln)))
+    print ("Branching Factor",n*(n-1))
     while(len(list_soln)!=0):
         #print("Printing soln")
         a=list_soln.pop()
-        # print(a)
+        print(a)
 
 
 print("Enter N")

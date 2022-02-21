@@ -242,9 +242,8 @@ class DrawBoard:
 
 if __name__ == "__main__":
     print('Enter the dimension of the chess board: \n')
-    # N = input()
-    # N = int(N)
-    N = 34
+    N = input()
+    N = int(N)
     heavy_queen = HeavyQueen(chess_dim=N)
 
     # ## largest N test
@@ -288,6 +287,6 @@ if __name__ == "__main__":
     print('The branching factor is : %s' % (heavy_queen.branch/heavy_queen.node))
 
     ## draw chess board, please put it at the end of main
-    # plot_cub_size = int(800/N)
-    # draw_board = DrawBoard(value_list=heavy_queen.chess_board, is_plot=True, size=plot_cub_size)
-    # draw_board.drawchessboard()
+    plot_cub_size = int(800/N)
+    draw_board = DrawBoard(value_list=heavy_queen.chess_board, is_plot=True, size=plot_cub_size)
+    draw_board.drawchessboard()

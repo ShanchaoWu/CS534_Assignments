@@ -7,8 +7,12 @@
 Go to the `CS534_Assignments (your cloned repository)`, run
 
 ```bash
-python3 HWPart1_genetic.py
+python3 HWPart1_greedy.py
 ```
+
+and input the number of queens N.
+
+It may take long time if N is large. If you come across an issue that it takes long time with small N, please rerun the program.
 
 #### A * Search
 

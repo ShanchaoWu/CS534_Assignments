@@ -1,3 +1,9 @@
+# // =================================================
+# /*
+# \author Shanchao Wu
+# */
+# // =================================================
+
 import numpy as np
 import random
 from turtle import Screen, Turtle

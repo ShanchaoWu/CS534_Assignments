@@ -20,6 +20,7 @@ class HeavyQueen:
         self.g = 0
         self.node = 0
         self.branch = 0
+        self.chess_board_old = []
 
     #### Board initialization
     def init_borad(self):
@@ -29,6 +30,7 @@ class HeavyQueen:
             savetxt('heavyqueen_init.csv', self.chess_board, delimiter=',')
         else:
             self.__loadboard()
+        self.chess_board_old = self.chess_board
 
     #### Load board from csv file
     def __loadboard(self):
@@ -79,6 +81,15 @@ class HeavyQueen:
         self.lightest_weight = queen_weight[0]
         return queen_weight, queen_pos
 
+    def find_weight(self, board):
+        np_index_list = np.transpose(np.nonzero(board))
+        weight_list = []
+        pos_list = []
+        for i_index in range(np_index_list.shape[0]):
+            weight_list.append(board[np_index_list[i_index, 0], np_index_list[i_index, 1]])
+            pos_list.append(np_index_list[i_index, :])
+        return weight_list, pos_list
+
     #### check how many pair of queens attacking each other
     #### return the number of pairs
     def check_total(self, chess_board):
@@ -93,6 +104,24 @@ class HeavyQueen:
 
     def cal_heuristic(self, attack_pair):
         return self.lightest_weight ^ 2 * attack_pair
+
+    def cal_g(self, board):
+        cost = 0
+
+        weight_list_new, pos_list_new = self.find_weight(board)
+        weight_list_old, pos_list_old = self.find_weight(board)
+
+        for i in range(len(weight_list_new)):
+            weight = weight_list_new[i]
+            pos_new = pos_list_new[i]
+            pos_old = pos_list_old[i]
+
+            step = abs(pos_new[0] - pos_old[0])
+
+            cost = cost + weight*weight*step
+
+        return cost
+
 
     def greedy_search_test(self):
         while(True):
@@ -204,12 +233,30 @@ class DrawBoard:
 
 if __name__ == "__main__":
     start_time = time.time()
+
     # heavy_queen = HeavyQueen(chess_dim=8, file_name='heavyqueen_init.csv')
     # print('Enter the dimension of the chess board: \n')
     # N = input()
     # N = int(N)
     N = 16
-    heavy_queen = HeavyQueen(chess_dim=N)
+    heavy_queen = HeavyQueen(chess_dim=N, file_name='heavyqueen9n8_init.csv')
+
+    cost = []
+    node = []
+    branch = []
+    b_factor = []
+    time_run = []
+
+    # for i in range(10):
+    #     heavy_queen.init_borad()
+    #     start_time = time.time()
+    #     heavy_queen.run()
+    #     time_run.append(time.time() - start_time)
+    #     node.append(heavy_queen.node)
+    #     branch.append(heavy_queen.branch)
+    #     b_factor.append(heavy_queen.branch/heavy_queen.node)
+
+
     heavy_queen.init_borad()
     heavy_queen.run()
     print("Runtime:  %s seconds" % (time.time() - start_time))
@@ -219,7 +266,7 @@ if __name__ == "__main__":
     print(heavy_queen.branch)
     print(heavy_queen.branch/heavy_queen.node)
 
-    ### draw chess board, please put it at the end of main
+    ## draw chess board, please put it at the end of main
     plot_cub_size = int(800/N)
     draw_board = DrawBoard(value_list=heavy_queen.chess_board, is_plot=True, size=plot_cub_size)
     draw_board.drawchessboard()

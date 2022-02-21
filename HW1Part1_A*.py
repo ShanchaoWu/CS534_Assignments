@@ -210,7 +210,7 @@ def cal_heuristic(state):
     temp=math.floor((count/2))
     if temp==0:
         return 0
-    return (math.floor((count/2)))
+    return (math.floor((count/2)))*1000
 
 def cal_g(state1,state2):
     cost = 0
@@ -270,12 +270,12 @@ def populate(x):
             temp.state=state
             temp.h_x=cal_heuristic(temp.state)
             temp.g_x=cal_g(temp.state,x.state)+ x.g_x
-            #print (temp.g_x)
-            #print (temp.h_x)
-            #temp.cost_so_far=temp.h_x
-            #temp.cost_so_far=temp.h_x+temp.g_x
+            # print (temp.g_x)
+            # print (temp.h_x)
+            # temp.cost_so_far=temp.h_x
+            # temp.cost_so_far=temp.h_x+temp.g_x
             temp.cost_so_far=cal_f_Astar(temp.h_x,temp.g_x)
-            #temp.cost_so_far=cal_f_greedy(temp.h_x,temp.g_x)
+            # temp.cost_so_far=cal_f_greedy(temp.h_x,temp.g_x)
 
             
             #print (temp)
@@ -302,7 +302,8 @@ def print_soln(state1):
     while(len(list_soln)!=0):
         #print("Printing soln")
         a=list_soln.pop()
-        print(a)
+        if len(list_soln)==0:
+            print(a)
 
 
 print("Enter N")

@@ -40,7 +40,7 @@ Run HW1Part2_genetic.py
 
 If you want to modify the genetic algorithm model.
 
-# Change line 667: test_model = genetic_algo(chess_board_init, population=200, crossover=3, mutate=0.2, time=0, eli_ratio=0.2, cul_ratio=0.2, max_gen=1000), The parameters are listed with default value
+##### Change line 667: test_model = genetic_algo(chess_board_init, population=200, crossover=3, mutate=0.2, time=0, eli_ratio=0.2, cul_ratio=0.2, max_gen=1000), The parameters are listed with default value
 
 population = the # of boards generate in each step
 

@@ -1,10 +1,12 @@
 # CS534_Assignments
 
+Go to the `CS534_Assignments (your cloned repository)`
+
 # Part 1
 
 #### Greedy Search
 
-Go to the `CS534_Assignments (your cloned repository)`, run
+Run
 
 ```bash
 python3 HWPart1_greedy.py
@@ -16,7 +18,13 @@ It may take long time if N is large. If you come across an issue that it takes l
 
 #### A * Search
 
-Run A*_and_Greedy_Haiyang.py. Type in the N as chessbord dimension.
+Run
+
+```bash
+python3 HWPart1_A*.py
+```
+
+Type in the N as chessbord dimension.
 
 If using Greedy Search: Change line 277 to : temp.cost_so_far=cal_f_greedy(temp.h_x,temp.g_x)
 
@@ -26,7 +34,13 @@ If using A* Search: Change line 277 to : temp.cost_so_far=cal_f_Astar(temp.h_x,t
 
 #### Hill climbing
 
-Run Hill climbing_final.py.
+Run
+
+```bash
+python3 HWPart2_hillclimbing.py
+```
+
+Input the dimension of the chess board, which is some integer between 8 and 32.
 
 If use basic hill climbing: change line 208 to : h_model = hill_climbing(board, annealing = False)
 
@@ -36,7 +50,12 @@ we set a parameter T in hill_climbing class, it indicates the max temperature, d
 
 #### Genetic Algorithm
 
-Run HW1Part2_genetic.py
+Run
+
+```bash
+python3 HWPart2_genetic.py
+```
+Input the dimension of the chess board, which is some integer between 8 and 32.
 
 If you want to modify the genetic algorithm model.
 

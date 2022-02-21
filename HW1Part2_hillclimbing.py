@@ -1,4 +1,4 @@
-import time;
+import time
 import random
 import numpy as np
 from numpy import savetxt, loadtxt
@@ -99,10 +99,10 @@ class hill_climbing:
         minNewPosition = (0,0)
         move_candidate = []
         for queen in range(len(self.init_queen_pos)): 
-            queenMoves = self.findPlacesToMove(queen);
+            queenMoves = self.findPlacesToMove(queen)
             tempQueensPositionList = [x for x in self.queensPositions_final]
             for move in queenMoves: 
-                tempQueensPositionList[queen] = move;
+                tempQueensPositionList[queen] = move
                 hVal = self.get_attack_cost(tempQueensPositionList) + self.get_move_cost(tempQueensPositionList)
                 if hVal < minHCalc:
                     if len(move_candidate) == 0:
@@ -146,13 +146,13 @@ class hill_climbing:
 
     def processing(self):
         start_time = time.time()
-        curHVal = self.get_attack_cost(self.init_queen_pos);
+        curHVal = self.get_attack_cost(self.init_queen_pos)
         time_list = [0]
         cost_list = [curHVal]
         success = 0
         while True:
-            time.sleep(1);
-            queenNewPos = self.findNextMove(curHVal); #It returns (queen, new pos, hVal)
+            time.sleep(1)
+            queenNewPos = self.findNextMove(curHVal) #It returns (queen, new pos, hVal)
             if(queenNewPos == -1):
                 if self.annealing_flag != 0:
                     print("using annealing")
@@ -177,8 +177,8 @@ class hill_climbing:
                     break
             if success == 0:
                 self.queensPositions_final[queenNewPos[0]] = queenNewPos[1]
-                curHVal = queenNewPos[2];
-                print("Current Board position with {} is : {}".format(curHVal, self.queensPositions_final));
+                curHVal = queenNewPos[2]
+                print("Current Board position with {} is : {}".format(curHVal, self.queensPositions_final))
             else:
                 self.queensPositions_final = side_way
                 curHVal = hVal_an
@@ -186,7 +186,7 @@ class hill_climbing:
             end_time = time.time()
             time_list.append(end_time - start_time)
             cost_list.append(curHVal)
-        print("Final positionsa are {}".format(self.queensPositions_final));
+        print("Final positionsa are {}".format(self.queensPositions_final))
         return (time_list, cost_list)
     
     def get_board(self):  # form a numpy-array
@@ -201,11 +201,14 @@ class hill_climbing:
         
 
 if __name__ == "__main__":
-    
-    test_model = HeavyQueen9N8(load_file='test_8.txt')
+    N = input() ### choose N from 8 to 32
+    N = int(N)
+    file_name = f'board/test_{N}.txt'
+    test_model = HeavyQueen9N8(load_file=file_name)
     board = test_model.init_board()
     print(board)
-    h_model = hill_climbing(board, annealing = True) # annealing = True means using annealing, False means hill climbing. T = 400 default, can modeify, it is the max temperature. large T makes high possible moving side-way
+    h_model = hill_climbing(board, annealing = True) # annealing = True means using annealing, False means hill climbing.
+    ## T = 400 default, can modeify, it is the max temperature. large T makes high possible moving side-way
     time_list, cost_list = h_model.processing()
     print(h_model.get_board())
     print(time_list)

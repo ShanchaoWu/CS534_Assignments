@@ -656,12 +656,11 @@ class DrawBoard:
             print('No plot! Set is_plot to True')
 
 if __name__ == "__main__":
-    N = 16 # can pick from 8-32
+    N = input() ### can pick from 8-32
+    N = int(N)
     file_name = f'board/test_{N}.txt'
     heavy_queen = HeavyQueen9N8(load_file=file_name)
     chess_board_init = heavy_queen.init_board()
-    # attack_pair = heavy_queen.check_total(chess_board_init)
-    # print(attack_pair)
     print("Original Board")
     print(chess_board_init)
     test_model = genetic_algo(chess_board_init)

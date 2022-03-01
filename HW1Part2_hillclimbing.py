@@ -1,6 +1,6 @@
 # // =================================================
 # /*
-# \author Shanchao Wu --  main algorithm
+# \author Shanchao Wu and prarthana sigedar --  main algorithm
 
 # */
 # // =================================================
